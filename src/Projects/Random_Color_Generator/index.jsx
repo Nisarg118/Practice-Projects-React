@@ -29,9 +29,7 @@ const Colorgenerator = () => {
   }, [isHex]);
 
   return (
-    <div
-      className={`min-h-screen bg-[${color}] flex justify-center items-center`}
-    >
+    <div className={`min-h-screen flex justify-center items-center`}>
       <div>
         <div className="bg-gray-600 text-center p-2 rounded-lg text-3xl mb-5">
           {color}{" "}
