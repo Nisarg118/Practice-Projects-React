@@ -4,11 +4,18 @@ import { add } from "./store/cartSlice";
 import { getProducts } from "./store/productSlice";
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { data: products } = useSelector((state) => state.products);
+  const { data: products, status } = useSelector((state) => state.products);
   useEffect(() => {
     dispatch(getProducts());
   }, []);
 
+  if (status === "Loading") {
+    return <div>...Loading</div>;
+  }
+
+  if (status === "Error") {
+    return <div>Error!!!!!!</div>;
+  }
   const AddtoCart = (product) => {
     dispatch(add(product));
   };
