@@ -1,64 +1,83 @@
 import React, { useState } from "react";
 import data from "./data";
 const Accordian = () => {
-  const [selected, setSelected] = useState(null);
-  const [multi, setMulti] = useState([]);
-  const [enable, setEnable] = useState(false);
-  function handleClick(id) {
-    setSelected(id === selected ? null : id);
-  }
+  const [isOpen, setIsOpen] = useState(null);
+  const [multiSelection, setMultiSelection] = useState([]);
+  const [isMultipleAllowed, setIsMultipleAllowed] = useState(false);
 
-  function handleMulti(id) {
-    let arr = [...multi];
-    let ind = arr.indexOf(id);
-    if (ind === -1) {
-      arr.push(id);
+  const handleToggle = (itemID) => {
+    setIsOpen(itemID === isOpen ? null : itemID);
+  };
+
+  const handleSelection = () => {
+    setIsOpen(null);
+    setMultiSelection([]);
+    setIsMultipleAllowed(!isMultipleAllowed);
+  };
+
+  const handleMultipleSelection = (itemID) => {
+    let newArray = [...multiSelection];
+    let index = newArray.findIndex((item) => item === itemID);
+    if (index === -1) {
+      newArray.push(itemID);
     } else {
-      arr.splice(ind, 1);
+      newArray.splice(index, 1);
     }
-    setMulti(arr);
-  }
-  console.log(multi);
+    setMultiSelection(newArray);
+  };
+
   return (
-    <div className="container bg-gray-600 min-h-screen flex items-center justify-center">
-      <div className="w-[600px]">
-        <div
-          onClick={() => setEnable(!enable)}
-          className="text-center mb-2 text-2xl bg-white rounded-lg hover:cursor-pointer"
-        >
-          Enable Multiselection
-        </div>
-        <div className="accordian bg-white rounded-xl p-3 ">
-          {data?.map((item) => (
-            <div className="">
+    <div className="flex items-center justify-center flex-col min-h-screen gap-5">
+      <h1
+        className="text-3xl font-bold bg-gray-400 py-3 px-4 w-[600px] cursor-pointer text-center rounded-md"
+        onClick={handleSelection}
+      >
+        {isMultipleAllowed
+          ? "Enable Single Selection"
+          : "Enable multiselection"}
+      </h1>
+      <div>
+        {data?.length &&
+          data.map((dataItem) => (
+            <div className=" w-[1000px]" key={dataItem.id}>
               <div
-                key={item.id}
-                className="flex justify-between bg-gray-400 p-2 m-2 hover:cursor-pointer"
                 onClick={
-                  enable
-                    ? () => handleMulti(item.id)
-                    : () => handleClick(item.id)
+                  isMultipleAllowed
+                    ? () => handleMultipleSelection(dataItem.id)
+                    : () => handleToggle(dataItem.id)
                 }
+                className="flex gap-4 text-2xl bg-gray-300 py-2 px-3 mb-1 cursor-pointer hover:bg-gray-400"
               >
-                <div>{item.question}</div>
-                <div>+</div>
+                <div>{dataItem.question}</div>
+                <div className="ml-auto">
+                  {isMultipleAllowed
+                    ? multiSelection.findIndex(
+                        (item) => item === dataItem.id
+                      ) === -1
+                      ? "+"
+                      : "-"
+                    : isOpen === dataItem.id
+                    ? "-"
+                    : "+"}
+                </div>
               </div>
-              <div
-                className={
-                  enable
-                    ? multi.indexOf(item.id) === -1
-                      ? "hidden"
-                      : null
-                    : selected !== item.id
-                    ? "hidden"
+              <p
+                className={`text-l py-2 px-3 bg-gray-200 mb-1 ${
+                  isMultipleAllowed
+                    ? multiSelection.findIndex(
+                        (item) => item === dataItem.id
+                      ) !== -1
+                      ? null
+                      : `hidden`
+                    : isOpen !== dataItem.id
+                    ? `hidden`
                     : null
-                }
+                }`}
               >
-                {item.answer}
-              </div>
+                {dataItem.answer}
+              </p>
             </div>
           ))}
-        </div>
       </div>
     </div>
   );

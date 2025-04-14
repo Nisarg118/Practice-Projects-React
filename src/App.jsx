@@ -1,17 +1,18 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Accordian from "./Projects/Accordian/Accordian";
 import Colorgenerator from "./Projects/Random_Color_Generator";
 import StarRating from "./Projects/Star_Rating";
 import Pro from "./Projects/Product_Dashboard/Pro";
+import TicTacToe from "./Projects/Tic_Tac_Toe";
 
 const App = () => {
   return (
     <div className="">
-      {/* <Accordian />
-      <Colorgenerator />
+      {/* <Accordian /> */}
+      {/* <Colorgenerator />
       <StarRating /> */}
-      <Pro />
+      {/* <Pro /> */}
+      <TicTacToe />
     </div>
   );
 };
