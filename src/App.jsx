@@ -6,6 +6,7 @@ import Pro from "./Projects/Product_Dashboard/Pro";
 import TicTacToe from "./Projects/Tic_Tac_Toe";
 import Tabs from "./Projects/Tab Form Component";
 import DebounceApiCall from "./Projects/Debounce_call";
+import AutoCompleteSearch from "./Projects/Autocomplete_Search";
 
 const App = () => {
   return (
@@ -16,7 +17,8 @@ const App = () => {
       {/* <Pro /> */}
       {/* <TicTacToe /> */}
       {/* <Tabs /> */}
-      <DebounceApiCall />
+      {/* <DebounceApiCall /> */}
+      <AutoCompleteSearch />
     </div>
   );
 };
